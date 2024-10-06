@@ -1,0 +1,32 @@
+{
+    "name": "Frontend Development Container",
+    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:latest",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "svelte.svelte-vscode",           // Svelte Support
+          "dbaeumer.vscode-eslint",         // Linting
+          "esbenp.prettier-vscode",         // Code Formatting
+          "dsznajder.es7-react-js-snippets", // Nützlich auch für Svelte
+          "GitHub.copilot-nightly",
+          "GitHub.copilot-chat"
+        ],
+        "settings": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+          },
+          "editor.defaultFormatter": "svelte.svelte-vscode",
+          "svelte.enable-ts-plugin": true,
+          "eslint.format.enable": true,
+          "files.autoSave": "onWindowChange",
+    	    "git.autofetch": true,
+          "workbench.colorTheme": "Default High Contrast"
+        }
+      }
+    },
+    "postCreateCommand": "npm install",
+    "appPort": [5000],
+    "forwardPorts": [5000],                  // Port für Svelte Development Server
+    "remoteUser": "node"
+  }

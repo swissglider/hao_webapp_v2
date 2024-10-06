@@ -1,0 +1,28 @@
+{
+    "name": "Backend Development Container",
+    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:latest",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "dbaeumer.vscode-eslint",         // Linting
+          "esbenp.prettier-vscode",         // Code Formatting
+          "streetsidesoftware.code-spell-checker",  // Spell Check
+          "GitHub.copilot-nightly",
+          "GitHub.copilot-chat"
+        ],
+        "settings": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+          },
+          "eslint.format.enable": true,
+          "files.autoSave": "onWindowChange",
+          "git.autofetch": true,
+          "workbench.colorTheme": "Default High Contrast"
+        }
+      }
+    },
+    "postCreateCommand": "npm install",
+    "forwardPorts": [3000],                  // Port für Backend Server
+    "remoteUser": "node"
+  }

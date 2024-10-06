@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    container_name: backend-container
+    working_dir: /workspace
+    volumes:
+      - ./backend:/workspace
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    command: "npm start"
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-container
+    working_dir: /workspace
+    volumes:
+      - ./frontend:/workspace
+    ports:
+      - "5000:5000"
+    command: "npm run dev"
