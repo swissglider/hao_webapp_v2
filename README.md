@@ -1,32 +1,94 @@
 # Projektname
 
-## Beschreibung
+## Repository klonen
 
-Eine kurze Beschreibung des Projekts und seines Zwecks.
+Um das Repository zu klonen, führe den folgenden Befehl im Terminal aus:
 
-## Installation
-
-Schritte zur Installation der Abhängigkeiten und zum Einrichten des Projekts.
-
-```bash
-# Klone das Repository
-git clone <URL_des_GitHub_Repositories>
-
-# Wechsle in das Projektverzeichnis
-cd <Projektverzeichnis>
-
-# Installiere die Abhängigkeiten
-npm install
+```sh
+git clone https://github.com/swissglider/hao_webapp_v2.git
+cd hao_webapp_v2
 ```
 
-## Nutzung
+## Öffne Stammverzeichnis in VSCode
 
-Anweisungen zur Nutzung des Projekts.
+   ```sh
+   code .
+   ```
 
-```bash
-# Starte die Anwendung
-npm start
-```
+## DevContainer einrichten
+
+### Frontend
+
+1. Navigiere in das `frontend` Verzeichnis:
+   ```sh
+   cd frontend
+   ```
+
+2. Öffne Visual Studio Code im `frontend` Verzeichnis:
+   ```sh
+   code .
+   ```
+
+3. Öffne das Command Palette mit `Cmd+Shift+P` und wähle `Remote-Containers: Reopen in Container`.
+
+### Backend
+
+1. Navigiere in das `backend` Verzeichnis:
+   ```sh
+   cd backend
+   ```
+
+2. Öffne Visual Studio Code im `backend` Verzeichnis:
+   ```sh
+   code .
+   ```
+
+3. Öffne das Command Palette mit `Cmd+Shift+P` und wähle `Remote-Containers: Reopen in Container`.
+
+## Anwendung starten
+
+### Frontend
+
+1. Stelle sicher, dass du im `frontend` Verzeichnis bist.
+2. Führe den folgenden Befehl aus, um die Anwendung zu starten:
+   ```sh
+   npm run dev
+   ```
+
+### Backend
+
+1. Stelle sicher, dass du im `backend` Verzeichnis bist.
+2. `.env` Datei muss im verzeichnis bakend Verzeichnis erstellt werden
+3. Führe den folgenden Befehl aus, um die Anwendung zu starten:
+   ```sh
+   npm start
+   ```
+
+## Änderungen synchronisieren
+
+Um deine Änderungen nach GitHub zu synchronisieren, folge diesen Schritten (im Stammverzeichnis VSC):
+
+0. **Status abfragen:**
+   ```sh
+   git status
+   ```
+
+1. **Änderungen hinzufügen:**
+   ```sh
+   git add .
+   ```
+
+2. **Änderungen committen:**
+   ```sh
+   git commit -m "Beschreibe deine Änderungen"
+   ```
+
+3. **Änderungen pushen:**
+   ```sh
+   git push origin master
+   ```
+
+Damit werden deine Änderungen nach GitHub synchronisiert.
 
 ## Verzeichnisstruktur
 
