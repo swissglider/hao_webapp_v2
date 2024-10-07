@@ -19,6 +19,7 @@
           "editor.defaultFormatter": "svelte.svelte-vscode",
           "svelte.enable-ts-plugin": true,
           "eslint.format.enable": true,
+          "editor.formatOnPaste": true,
           "files.autoSave": "onWindowChange",
     	    "git.autofetch": true,
           "workbench.colorTheme": "Default High Contrast"
