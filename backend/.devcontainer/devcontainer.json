@@ -4,11 +4,12 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint", // Linting
-        "esbenp.prettier-vscode", // Code Formatting
-        "streetsidesoftware.code-spell-checker", // Spell Check
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
         "GitHub.copilot-nightly",
-        "GitHub.copilot-chat"
+        "GitHub.copilot-chat",
+        "shd101wyy.markdown-preview-enhanced"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -20,7 +21,8 @@
         "editor.formatOnPaste": true,
         "files.autoSave": "onWindowChange",
         "git.autofetch": true,
-        "workbench.colorTheme": "Default High Contrast"
+        "workbench.colorTheme": "Default High Contrast",
+        "cSpell.enabled": false
       }
     }
   },

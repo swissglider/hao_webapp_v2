@@ -1,19 +1,21 @@
 {
-    "name": "backend",
-    "version": "1.0.0",
-    "description": "Backend for interacting with Home Assistant",
-    "main": "src/server.js",
-    "scripts": {
-        "start": "node src/server.js"
-    },
-    "dependencies": {
-        "axios": "latest",
-        "cors": "^2.8.5",
-        "dotenv": "latest",
-        "express": "latest"
-    },
-    "devDependencies": {
-        "eslint": "latest",
-        "prettier": "latest"
-    }
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for interacting with Home Assistant",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "cors": "^2.8.5",
+    "dotenv": "latest",
+    "express": "latest"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "prettier": "latest",
+    "nodemon": "latest"
+  }
 }
