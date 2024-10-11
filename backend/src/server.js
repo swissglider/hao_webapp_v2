@@ -3,7 +3,7 @@ const axios = require("axios");
 const cors = require("cors");
 require("dotenv").config();
 
-const haRoutes = require("./routes/haRoutes");
+const haRoutes = require("./routes/testRoutes");
 const dataRoutes = require("./routes/dataRoutes");
 
 require("./services/homeAssistantService");
@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 // CORS aktivieren
 app.use(cors());
 app.use(express.json());
-app.use("/api/ha", haRoutes);
+app.use("/api/test", haRoutes);
 app.use("/api/data", dataRoutes);
 
 app.get("/", (req, res) => {

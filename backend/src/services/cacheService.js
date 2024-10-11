@@ -8,7 +8,6 @@ const scheduleCacheUpdate = (key, fetchFunction, interval) => {
     try {
       const data = await fetchFunction();
       setCache(key, data, interval);
-      console.log(`Cache aktualisiert: key=${key}`);
     } catch (error) {
       console.error(`Fehler beim Aktualisieren des Caches: key=${key}`, error);
     }
@@ -30,7 +29,6 @@ const scheduleCacheUpdate = (key, fetchFunction, interval) => {
 const setCache = (key, data, ttl) => {
   const expiry = Date.now() + ttl;
   cache[key] = { data, expiry, isUpdated: true };
-  console.log(`Setze Cache: key=${key}, ttl=${ttl}, expiry=${expiry}`);
 };
 
 /**
@@ -41,10 +39,8 @@ const setCache = (key, data, ttl) => {
 const getCache = (key) => {
   const cacheEntry = cache[key];
   if (cacheEntry && Date.now() < cacheEntry.expiry) {
-    console.log(`Cache-Hit: key=${key}`);
     return cacheEntry.data;
   }
-  console.log(`Cache-Miss oder abgelaufen: key=${key}`);
   return null;
 };
 
@@ -55,7 +51,6 @@ const getCache = (key) => {
  */
 const isCacheUpdated = (key) => {
   const updated = cache[key]?.isUpdated || false;
-  console.log(`Cache-Update-Status: key=${key}, isUpdated=${updated}`);
   return updated;
 };
 
@@ -66,7 +61,6 @@ const isCacheUpdated = (key) => {
 const resetCacheUpdateStatus = (key) => {
   if (cache[key]) {
     cache[key].isUpdated = false;
-    console.log(`Cache-Update-Status zurückgesetzt: key=${key}`);
   }
 };
 

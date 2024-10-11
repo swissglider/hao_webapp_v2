@@ -1,51 +1,123 @@
 // backend/services/homeAssistantService.js
 
 const axios = require("axios");
-const { setCache, scheduleCacheUpdate } = require("./cacheService");
+const { scheduleCacheUpdate } = require("./cacheService");
 
 // Den Intervall aus der Umgebungsvariable lesen oder einen Standardwert verwenden
 const CACHE_UPDATE_INTERVAL =
   process.env.CACHE_UPDATE_INTERVAL || 5 * 60 * 1000; // Fallback zu 5 Minuten
 
-const fetchData = async (endpoint) => {
-  console.log(`Abrufen von Daten von Endpoint: ${endpoint}`);
+const fetchData = async ({ method, endpoint, data = null }) => {
   try {
-    const response = await axios.get(`${process.env.HA_URL}/api/${endpoint}`, {
+    const url = `${process.env.HA_URL}/api/${endpoint}`;
+    const options = {
+      method,
+      url,
       headers: {
         Authorization: `Bearer ${process.env.HA_TOKEN}`,
+        "Content-Type": "application/json",
       },
-    });
-    console.log(`Erfolgreich Daten von ${endpoint} abgerufen`);
+      data,
+    };
+
+    const response = await axios(options);
     return response.data;
   } catch (error) {
-    console.error(`Fehler beim Abrufen der Daten von ${endpoint}:`, error);
-    throw new Error(`Fehler beim Abrufen der Daten von ${endpoint}.`);
+    console.error(
+      `Fehler beim Abrufen der Daten von ${endpoint} mit Methode: ${method}:`,
+      error
+    );
+    throw new Error(
+      `Fehler beim Abrufen der Daten von ${endpoint} mit Methode: ${method}.`
+    );
   }
 };
 
-// Spezifische Methoden zum Abrufen von Temperatur- und Bewegungsdaten
-const fetchTemperatureData = async () => {
-  console.log("Abrufen von Temperaturdaten");
-  const data = await fetchData("temperature");
-  console.log("Temperaturdaten erfolgreich abgerufen");
-  return data;
-};
-
-const fetchMotionData = async () => {
-  console.log("Abrufen von Bewegungsdaten");
-  const data = await fetchData("motion");
-  console.log("Bewegungsdaten erfolgreich abgerufen");
-  return data;
-};
-
 const fetchStatusData = async () => {
-  console.log("Abrufen von Statusdaten");
-  const data = await fetchData("");
-  console.log("Statusdaten erfolgreich abgerufen");
+  const data = await fetchData({ method: "get", endpoint: "" });
   return data;
 };
 
-// Automatische Aktualisierung der Daten alle 5 Minuten
-//scheduleCacheUpdate("temperature", fetchTemperatureData, CACHE_UPDATE_INTERVAL);
-//scheduleCacheUpdate("motion", fetchMotionData, CACHE_UPDATE_INTERVAL);
+const fetchStatesData = async () => {
+  const data = await fetchData({ method: "get", endpoint: "states" });
+  return data;
+};
+
+const fetchConfigData = async () => {
+  const data = await fetchData({
+    method: "get",
+    endpoint: "config",
+  });
+  return data;
+};
+
+const fetchShellyButton_HueArea_AutomationData = async () => {
+  const states = await fetchData({ method: "get", endpoint: "states" });
+  const _sbhaAutomations = await fetchData({
+    method: "post",
+    endpoint: "template",
+    data: {
+      template: `{{ label_entities('shellybutton_huearea_automation')}}`,
+    },
+  });
+  const sbhaAutomations = _sbhaAutomations
+    .replace(/[\[\]']/g, "")
+    .split(",")
+    .map((item) => item.trim());
+  const auotmationIDs = states
+    .filter((entity) => sbhaAutomations.includes(entity.entity_id))
+    .map((entity) => entity.attributes.id);
+
+  const automations = await Promise.all(
+    auotmationIDs.map(async (id) =>
+      fetchData({ method: "get", endpoint: `config/automation/config/${id}` })
+    )
+  );
+  return automations;
+};
+
+const fetchAreasData = async () => {
+  const data = await fetchData({
+    method: "post",
+    endpoint: "template",
+    data: { template: "{{ areas() }}" },
+  });
+  return data;
+};
+
+const fetchLabelsData = async () => {
+  const data = await fetchData({
+    method: "post",
+    endpoint: "template",
+    data: { template: "{{ labels()}}" },
+  });
+  // wenn data ein arrey ist müssen wir ein for über das arrey machen
+  if (typeof data === "string") {
+    const cleanedStr = data.replace(/[\[\]']/g, "");
+    const array = cleanedStr.split(",").map((item) => item.trim());
+    newReturn = {};
+    if (Array.isArray(array)) {
+      for (let i = 0; i < array.length; i++) {
+        newReturn[array[i]] = await fetchData({
+          method: "post",
+          endpoint: "template",
+          data: { template: `{{ label_entities('${array[i]}')}}` },
+        });
+      }
+      return newReturn;
+    }
+  }
+  return data;
+};
+
 scheduleCacheUpdate("status", fetchStatusData, CACHE_UPDATE_INTERVAL);
+scheduleCacheUpdate("states", fetchStatesData, CACHE_UPDATE_INTERVAL);
+scheduleCacheUpdate("config", fetchConfigData, CACHE_UPDATE_INTERVAL);
+scheduleCacheUpdate("areas", fetchAreasData, CACHE_UPDATE_INTERVAL);
+scheduleCacheUpdate("labels", fetchLabelsData, CACHE_UPDATE_INTERVAL);
+scheduleCacheUpdate(
+  "shellybutton_huearea_automation",
+  fetchShellyButton_HueArea_AutomationData,
+  CACHE_UPDATE_INTERVAL
+);
+//scheduleCacheUpdate("automations", fetchLabelsData, CACHE_UPDATE_INTERVAL);
