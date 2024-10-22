@@ -22,11 +22,12 @@
           "editor.formatOnPaste": true,
           "files.autoSave": "onWindowChange",
     	    "git.autofetch": true,
-          "workbench.colorTheme": "Default High Contrast"
+          "workbench.colorTheme": "Default High Contrast",
+          "remote.localPortHost": "allInterfaces"
         }
       }
     },
-    "postCreateCommand": "npm install",
+    "postCreateCommand": "npm install -g cordova && npm install -g framework7-cli && npm install",
     "appPort": [5000],
     "forwardPorts": [5000],                  // Port für Svelte Development Server
     "remoteUser": "node"

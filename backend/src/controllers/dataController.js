@@ -37,10 +37,11 @@ const getShellyButtonLabelData = (req, res) => {
       if (!hue_types.hasOwnProperty(entity.attributes.hue_type)) {
         hue_types[entity.attributes.hue_type] = [];
       }
-
       // füge entity zu hue_types hinzu
       hue_types[entity.attributes.hue_type].push({
         hue_area_name: entity.attributes.friendly_name,
+        hue_area_entity_id: entity.entity_id,
+        hue_type: entity.attributes.hue_type,
         hue_light_enities: entity.attributes.entity_id,
         hue_light_names: entity.attributes.lights,
         hue_scenes: entity.attributes.hue_scenes

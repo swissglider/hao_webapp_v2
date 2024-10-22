@@ -22,7 +22,8 @@
         "files.autoSave": "onWindowChange",
         "git.autofetch": true,
         "workbench.colorTheme": "Default High Contrast",
-        "cSpell.enabled": false
+        "cSpell.enabled": false,
+        "remote.localPortHost": "allInterfaces"
       }
     }
   },

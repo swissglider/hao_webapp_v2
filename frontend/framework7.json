@@ -1,0 +1,18 @@
+{
+  "cwd": "/workspaces/hao_webapp_v2/frontend",
+  "type": [
+    "pwa"
+  ],
+  "name": "HAOS-Webapp V2",
+  "framework": "svelte",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false
+}
